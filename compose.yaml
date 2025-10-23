@@ -1,0 +1,40 @@
+﻿services:
+  openllamaapi:
+    image: openllamaapi
+    container_name: openllamaapi
+    hostname: openllama
+    build:
+      context: .
+      dockerfile: OpenLlamaAPI/Dockerfile
+    depends_on:
+      - ollama
+    ports:
+      - "8080:8080"
+    networks:
+      - ollama-network
+    
+  ollama:
+    image: ollama/ollama:rocm
+    container_name: ollama
+    hostname: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./ollama:/root/.ollama
+    devices:
+      - /dev/kfd
+      - /dev/dri
+    networks:
+      - ollama-network
+    healthcheck:
+      test: "ollama show gemma3:4b || ollama pull gemma3:4b"
+      interval: 20m
+      timeout: 30m
+      retries: 3
+      start_period: 15s
+      start_interval: 5s 
+        
+
+networks:
+  ollama-network:
+    name: ollama-network

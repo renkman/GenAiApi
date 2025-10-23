@@ -1,0 +1,18 @@
+@OpenLlamaAPI_HostAddress = http://localhost:8080
+
+POST {{OpenLlamaAPI_HostAddress}}/chat/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "role": "user",
+  "message": "Hi! Tell me three facts about Hamburg!"
+}
+
+###
+
+
+GET {{OpenLlamaAPI_HostAddress}}/image/
+Accept: application/json
+
+###
