@@ -4,7 +4,7 @@ using OpenCvSharp;
 
 public class VideoCapturer : IVideoCapturer
 {
-    private ILogger<VideoCapturer> _logger;
+    private readonly ILogger<VideoCapturer> _logger;
 
     public VideoCapturer(ILogger<VideoCapturer> logger)
     {
