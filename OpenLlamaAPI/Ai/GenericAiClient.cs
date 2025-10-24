@@ -19,4 +19,13 @@ public class GenericAiClient : IGenericAiClient
         var response = await _chatClient.GetResponseAsync(chatMessage);
         return response.Text;
     }
+
+    public async Task<string> AnalyzeImage(string image)
+    {
+        var prompt = new TextContent("Please tell me the weather conditions on the submitted image.");
+        var imageContent = new TextContent(image);
+        var chatMessage = new ChatMessage(ChatRole.User, [prompt, imageContent]);
+        var response = await _chatClient.GetResponseAsync(chatMessage);
+        return response.Text;
+    }
 }

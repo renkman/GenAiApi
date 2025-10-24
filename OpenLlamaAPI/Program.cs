@@ -8,7 +8,7 @@ using OpenLlamaAPI.VideoCapture;
 
 namespace OpenLlamaAPI;
 
-public class Program
+public static class Program
 {
     public static void Main(string[] args)
     {
@@ -40,13 +40,13 @@ public class Program
         var videoUrl = app.Configuration["LiveCamUri"] ?? "";
 
         app.MapPost("/chat",
-                async Task<Results<CreatedAtRoute<string>, BadRequest>> (HttpContext httpContext,
+                async Task<Results<Ok<string>, BadRequest>> (HttpContext httpContext,
                     [FromBody] ChatInput chatInput,
                     [FromKeyedServices("genericAiClient")] IGenericAiClient genericAiClient) =>
                 {
                     var result = await genericAiClient.ChatAsync(chatInput);
 
-                    return TypedResults.CreatedAtRoute(result, "PostChat", chatInput);
+                    return TypedResults.Ok(result);
                 })
             .WithName("PostChat")
             .Produces(StatusCodes.Status500InternalServerError)
@@ -55,17 +55,21 @@ public class Program
             .WithOpenApi();
 
         app.MapGet("/image",
-                (HttpContext httpContext, [FromKeyedServices("videoCapturer")] IVideoCapturer videoCapturer) =>
+            async Task<Ok> (HttpContext httpContext, [FromKeyedServices("videoCapturer")] IVideoCapturer videoCapturer, [FromKeyedServices("genericAiClient")] IGenericAiClient genericAiClient) =>
                 {
-                    if (videoCapturer.TryCapture(videoUrl, out var image))
-                        return Results.Ok(image.ToBase64());
-                    return Results.Problem($"No image found under {videoUrl}", statusCode: 500);
+                    if (!videoCapturer.TryCapture(videoUrl, out var image))
+                        Results.Problem($"No image found under {videoUrl}", statusCode: 500);
+
+                    var result = await genericAiClient.AnalyzeImage(image.ToBase64());
+                    
+                    return TypedResults.Ok(); 
                 })
             .WithName("GetImage")
-            .Produces(StatusCodes.Status500InternalServerError)
-            .WithSummary("Upload image.")
-            .WithDescription("Send an image to the Ollama server and get a description of the image as response.")
-            .WithOpenApi();
+                .Produces(StatusCodes.Status500InternalServerError)
+                .WithSummary("Upload image.")
+                .WithDescription(
+                    "Send an image to the Ollama server and get a description of the image as response.")
+                .WithOpenApi();
         
         app.Run();
     }
