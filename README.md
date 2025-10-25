@@ -2,6 +2,7 @@
 
 [![.NET](https://github.com/renkman/GenAiApi/actions/workflows/ci-pipeline.yml/badge.svg)](https://github.com/renkman/GenAiApi/actions/workflows/ci-pipeline.yml)
 [![codecov](https://codecov.io/gh/renkman/GenAiApi/graph/badge.svg?token=JCPHCBQ5W8)](https://codecov.io/gh/renkman/GenAiApi)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/renkman/GenAiApi/blob/master/LICENSE)
 
 Simple API for [Ollama](https://ollama.com/) experiments.
 
@@ -12,7 +13,7 @@ The docker compose file contains configurations the ollama docker container and 
 ## Use cases
 
 ### Chat
-The HTTP-POST route `/chat` just sends a message with the selected role to the Ollama API and returns its response.
+The HTTP POST route `/chat` just sends a message with the selected role to the Ollama API and returns its response.
 
 ### Image
 The HTTP GET route `/image` captures a current image from a live camera in Hamburg and lets the AI model explain what the time of day and weather are like.
