@@ -15,16 +15,16 @@ public class GenericAiClient : IGenericAiClient
         _logger = logger;
     }
 
-    public async Task<string> ChatAsync(ChatInput chatInput, CancellationToken ct)
+    public async Task<string> ChatAsync(Prompt prompt, CancellationToken ct)
     {
-        var chatMessage = chatInput.ToChatMessage();
+        var chatMessage = prompt.ToChatMessage();
         var response = await _chatClient.GetResponseAsync(chatMessage, cancellationToken: ct);
         return response.Text;
     }
 
     public async Task<string> AnalyzeImage(byte[] image, CancellationToken ct)
     {
-        var prompt = new TextContent("Please tell me the weather conditions on the submitted image.");
+        var prompt = new TextContent(Prompts.WeatherPrompt);
         var imageContent = new DataContent(image, "image/jpeg");
         var chatMessage = new ChatMessage(ChatRole.User, [prompt, imageContent]);
         

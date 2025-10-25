@@ -2,13 +2,12 @@ using Microsoft.Extensions.AI;
 
 namespace OpenLlamaAPI.Contracts;
 
-public record ChatInput
+public record Prompt
 {
     public required string Role { get; init; }
     public required string Message  { get; init; }
 
-    public ChatMessage ToChatMessage() =>
-        new ChatMessage(MapChatRole(Role), Message);
+    public ChatMessage ToChatMessage() => new(MapChatRole(Role), Message);
 
     private static ChatRole MapChatRole(string role) =>
         role.ToLowerInvariant() switch

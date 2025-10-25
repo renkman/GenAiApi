@@ -12,10 +12,10 @@ public static class WebApplicationExtensions
     {
         app.MapPost("/chat",
                 async Task<Results<Ok<string>, BadRequest>> (HttpContext httpContext,
-                    [FromBody] ChatInput chatInput,
+                    [FromBody] Prompt prompt,
                     [FromKeyedServices("genericAiClient")] IGenericAiClient genericAiClient, CancellationToken ct) =>
                 {
-                    var result = await genericAiClient.ChatAsync(chatInput, ct);
+                    var result = await genericAiClient.ChatAsync(prompt, ct);
 
                     return TypedResults.Ok(result);
                 })
@@ -36,13 +36,13 @@ public static class WebApplicationExtensions
                     
                     var result = await genericAiClient.AnalyzeImage(image, ct);
 
-                    return TypedResults.Ok(result.ToString());
+                    return TypedResults.Ok(result);
                 })
             .WithName("GetImage")
             .Produces(StatusCodes.Status500InternalServerError)
             .WithSummary("Upload image.")
             .WithDescription(
-                "Send an image to the Ollama server and get a description of the image as response.")
+                "Send an image of a Hamburg located live webcam to the Ollama server and get a description of the current daytime and the current weather as response.")
             .WithOpenApi();
         
         return app;
