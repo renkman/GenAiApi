@@ -1,7 +1,6 @@
 using Microsoft.Extensions.AI;
 using OllamaSharp;
 using OpenLlamaAPI.Ai;
-using OpenLlamaAPI.Config;
 using OpenLlamaAPI.VideoCapture;
 
 namespace OpenLlamaAPI;
@@ -17,6 +16,8 @@ public static class WebApplicationBuilderExtensions
             BaseAddress = ollamaConfig.Uri,
             Timeout = ollamaConfig.TimeoutInMinutes
         };
+        
+        builder.Services.AddSingleton(builder.Configuration.GetSection("VideoCapture").Get<VideoCaptureConfig>()!);
         
         builder.Services.AddKeyedSingleton<IVideoCapturer, VideoCapturer>("videoCapturer");
         builder.Services.AddKeyedSingleton<IGenericAiClient, GenericAiClient>("genericAiClient");

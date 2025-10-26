@@ -15,17 +15,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build solution
-      run: dotnet build --no-restore
     - name: Run tests
-      run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage"
+      run: docker compose up tests
+    - name: Copy tests resutls
+      run: docker cp openllamaapi_tests:/results ./
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
       with:

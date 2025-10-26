@@ -25,14 +25,13 @@ public static class WebApplicationExtensions
             .WithDescription("Send a message to the Ollama server with the selected chat role and get the response.")
             .WithOpenApi();
 
-        var videoUrl = app.Configuration["LiveCamPageUri"] ?? "";
         app.MapGet("/image",
                 async Task<Ok<string>> (HttpContext httpContext,
                     [FromKeyedServices("videoCapturer")] IVideoCapturer videoCapturer,
                     [FromKeyedServices("genericAiClient")] IGenericAiClient genericAiClient, CancellationToken ct) =>
                 {
-                    if (!videoCapturer.TryCapture(videoUrl, out var image))
-                        Results.Problem($"No image found under {videoUrl}", statusCode: 500);
+                    if (!videoCapturer.TryCapture(out var image))
+                        Results.Problem($"No image found", statusCode: 500);
                     
                     var result = await genericAiClient.AnalyzeImage(image, ct);
 

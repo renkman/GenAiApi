@@ -7,9 +7,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		compose.yaml = compose.yaml
 		README.md = README.md
 		LICENSE = LICENSE
+		Tests.Dockerfile = Tests.Dockerfile
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenLlamaApiTests", "OpenLlamaApiTests\OpenLlamaApiTests.csproj", "{09DCF44A-D29D-4F00-BDF4-2648D9D5007E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{2768199E-8D2E-48C2-AF79-3629FB4855AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{0B07C466-FD33-48C5-945D-F2973610F21A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,5 +30,8 @@ Global
 		{09DCF44A-D29D-4F00-BDF4-2648D9D5007E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09DCF44A-D29D-4F00-BDF4-2648D9D5007E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09DCF44A-D29D-4F00-BDF4-2648D9D5007E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0B07C466-FD33-48C5-945D-F2973610F21A} = {2768199E-8D2E-48C2-AF79-3629FB4855AC}
 	EndGlobalSection
 EndGlobal

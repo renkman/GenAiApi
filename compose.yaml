@@ -2,7 +2,7 @@
   openllamaapi:
     image: openllamaapi
     container_name: openllamaapi
-    hostname: openllama
+    hostname: openllamaapi
     build:
       context: .
       dockerfile: OpenLlamaAPI/Dockerfile
@@ -33,7 +33,13 @@
       retries: 3
       start_period: 15s
       start_interval: 5s 
-        
+      
+  tests:
+    image: openllamaapi_tests
+    container_name: openllamaapi_tests
+    build:
+      context: .
+      dockerfile: Tests.Dockerfile
 
 networks:
   ollama-network:
