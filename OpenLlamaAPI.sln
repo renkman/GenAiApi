@@ -15,6 +15,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{2768199E-8D2E-48C2-AF79-3629FB4855AC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{0B07C466-FD33-48C5-945D-F2973610F21A}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\ci-pipeline.yml = .github\workflows\ci-pipeline.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
