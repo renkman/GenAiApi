@@ -16,7 +16,7 @@ jobs:
     - name: Build tests container
       run: docker compose build tests
     - name: Run tests
-      run: docker compose build tests
+      run: docker compose run tests
     - name: Copy tests results
       run: docker cp openllamaapi_tests:/results ./
     - name: Upload coverage reports to Codecov
